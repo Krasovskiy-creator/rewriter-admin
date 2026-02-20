@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id               Int      @id @default(autoincrement())
+  status           String   @default("ToDo")
+  sourceArchiveUrl String?  @map("source_archive_url")
+  resultArchiveUrl String?  @map("result_archive_url")
+  rewriteCount     Int      @default(100) @map("rewrite_count")
+  progress         String   @default("")
+  progressCurrent  Int      @default(0) @map("progress_current")
+  progressTotal    Int      @default(0) @map("progress_total")
+  fileName         String?  @map("file_name")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("tasks")
+}
